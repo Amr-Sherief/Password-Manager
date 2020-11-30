@@ -1,5 +1,6 @@
 import tkinter as tk
 import mysql.connector
+import random
 
 mydb = mysql.connector.connect(
 
@@ -46,6 +47,10 @@ def check():
                    '_', ';', ',', '.', '"', "'"]
         choices = [s_alphabet, c_alphabet, numbers, symbols]
 
+        main_probability = random.choice(choices)
+
+        branched_probability = random.choice(main_probability)
+
 
 menu = tk.OptionMenu(frame, val, *options)
 menu.grid(row=0, column=0, columnspan=2)
@@ -55,3 +60,5 @@ commit = tk.Button(frame, image=circle, width=25, height=25, command=check)
 commit.grid(row=1, column=0, columnspan=2)
 
 root.mainloop()
+
+# todo make the password generated made of 16 characters
