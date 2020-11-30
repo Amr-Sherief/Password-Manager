@@ -16,7 +16,7 @@ value = val.get()
 frame = tk.Frame(root)
 frame.pack(side='top')
 
-options = ["Add Password", "Show Passwords", "Generate Password"]
+options = ["Add Login", "Show Logins", "Generate Password"]
 
 
 def check():
@@ -31,6 +31,20 @@ def check():
         password.grid(row=4, column=1)
         submit = tk.Button(frame, text="Submit", fg="red")
         submit.grid(row=5, column=0, columnspan=2)
+    if val.get() == options[1]:
+        return 0
+    if val.get() == options[2]:
+        s_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+                      'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+                      'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        c_alphabet = ['A', 'B', 'C', 'd', 'E', 'F', 'G', 'H',
+                      'I', 'J', 'K', 'l', 'm', 'n', 'O', 'P', 'Q',
+                      'r', 's', 't', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
+                   '+', '=', '/', '\\', '?', '<', '>', '{', '}', '[', ']',
+                   '_', ';', ',', '.', '"', "'"]
+        choices = [s_alphabet, c_alphabet, numbers, symbols]
 
 
 menu = tk.OptionMenu(frame, val, *options)
