@@ -89,5 +89,4 @@ root.mainloop()
 
 mydb.commit()
 
-# todo make the password generated made of 16 characters
 # todo look for errors in line 71
