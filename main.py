@@ -3,8 +3,14 @@ import mysql.connector
 import random
 
 mydb = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    passwd='19371937A',
+    database='password'
 
 )
+
+cursor = mydb.cursor()
 
 root = tk.Tk()
 root.attributes("-fullscreen", True)
@@ -35,21 +41,41 @@ def check():
     if val.get() == options[1]:
         return 0
     if val.get() == options[2]:
+
         s_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
                       'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
                       'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
         c_alphabet = ['A', 'B', 'C', 'd', 'E', 'F', 'G', 'H',
                       'I', 'J', 'K', 'l', 'm', 'n', 'O', 'P', 'Q',
                       'r', 's', 't', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
         numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
         symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
                    '+', '=', '/', '\\', '?', '<', '>', '{', '}', '[', ']',
                    '_', ';', ',', '.', '"', "'"]
+
         choices = [s_alphabet, c_alphabet, numbers, symbols]
+        last_password = ''
 
-        main_probability = random.choice(choices)
+        while True:
+            for i in range(15):
 
-        branched_probability = random.choice(main_probability)
+                main_probability = random.choice(choices)
+
+                branched_probability = random.choice(main_probability)
+                last_password += str(branched_probability)
+                nums = ''
+
+            for i in last_password:
+                if i in c_alphabet:
+                        nums += i
+
+            last_password_label = tk.Label(frame, text=last_password)
+            last_password_label.grid(row=3, column=0)
+            num = tk.Label(frame, text=nums)
+            num.grid(row=4, column=0)
 
 
 menu = tk.OptionMenu(frame, val, *options)
@@ -61,4 +87,7 @@ commit.grid(row=1, column=0, columnspan=2)
 
 root.mainloop()
 
+mydb.commit()
+
 # todo make the password generated made of 16 characters
+# todo look for errors in line 71
