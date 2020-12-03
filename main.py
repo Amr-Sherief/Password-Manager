@@ -69,6 +69,7 @@ def check():
 
             s_alphabet_num = 0
             c_alphabet_num = 0
+            numbers_num = 0
             symbols_num = 0
 
             for i in last_password:
@@ -76,6 +77,8 @@ def check():
                     s_alphabet_num += 1
                 if i in c_alphabet:
                     c_alphabet_num += 1
+                if i in numbers:
+                    numbers_num += 1
                 if i in symbols:
                     symbols_num += 1
 
