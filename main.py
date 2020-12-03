@@ -26,28 +26,84 @@ frame.pack(side='top')
 options = ["Add Login", "Show Logins", "Generate Password"]
 
 
+def sequel():
+    global done
+
+    e_label.destroy()
+    email.destroy()
+    p_label.destroy()
+    password.destroy()
+    submit.destroy()
+
+    insert_code = 'INSERT INTO passwords (email, pass) VALUES ("{}", "{")'
+    insert_code = insert_code.format(email.get(), password.get())
+    cursor.execute(insert_code)
+
+    done = tk.Label(frame, text="Done!", fg='red')
+    done.grid(row=6, column=0, columnspan=2)
+
+
 def check():
-    e_label = tk.Label(frame, text="Email")
-    email = tk.Entry(frame)
-    p_label = tk.Label(frame, text="Password")
-    password = tk.Entry(frame)
-    submit = tk.Button(frame, text="Submit", fg="red")
+    global e_label
+    global email
+    global p_label
+    global password
+    global submit
+    global last_password_entry
+
+    try:
+        done.destroy()
+    except:
+        print("======================================================================================")
 
     if val.get() == options[0]:
+
+        e_label = tk.Label(frame, text="Email")
+        email = tk.Entry(frame)
+        p_label = tk.Label(frame, text="Password")
+        password = tk.Entry(frame)
+        submit = tk.Button(frame, text="Submit", fg="red", command=sequel)
+
         e_label.grid(row=3, column=0, sticky='W')
         email.grid(row=3, column=1)
         p_label.grid(row=4, column=0, sticky='W')
         password.grid(row=4, column=1)
         submit.grid(row=5, column=0, columnspan=2)
+
     if val.get() == options[1]:
-        return 0
+
+        return
+
     if val.get() == options[2]:
-        global last_password_label
-        e_label.destroy()
-        email.destroy()
-        p_label.destroy()
-        password.destroy()
-        submit.destroy()
+
+        try:
+            e_label.destroy()
+        except:
+            print("======================================================================================")
+
+        try:
+            email.destroy()
+        except:
+            print("======================================================================================")
+        try:
+            p_label.destroy()
+        except:
+            print("======================================================================================")
+
+        try:
+            password.destroy()
+        except:
+            print("======================================================================================")
+
+        try:
+            submit.destroy()
+        except:
+            print('======================================================================================')
+
+        try:
+                last_password_entry.destroy()
+        except:
+            print("======================================================================================")
 
         s_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
                       'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
@@ -69,8 +125,9 @@ def check():
         c_alphabet_num = 0
         numbers_num = 0
         symbols_num = 0
+
         while True:
-            for i in range(15):
+            for i in range(16):
 
                 if i == 0:
 
@@ -110,11 +167,10 @@ def check():
                     symbols_num += 1
                 last_password += str(branched_probability)
 
-            last_password_label = tk.Label(frame, text=last_password)
-            last_password_label.grid(row=3, column=0)
-            num = tk.Label(frame, text=str(symbols_num))
-            num.grid(row=4, column=0)
-            return
+            else:
+                last_password_entry = tk.Label(frame, text=last_password)
+                last_password_entry.grid(row=3, column=0)
+                return
 
 
 menu = tk.OptionMenu(frame, val, *options)
@@ -127,5 +183,4 @@ commit.grid(row=1, column=0, columnspan=2)
 root.mainloop()
 
 mydb.commit()
-# todo add sql database insertion
 # todo fix add password and generate password selection error
