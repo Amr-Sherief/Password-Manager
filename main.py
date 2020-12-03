@@ -66,16 +66,24 @@ def check():
 
                 branched_probability = random.choice(main_probability)
                 last_password += str(branched_probability)
-                nums = ''
+
+            s_alphabet_num = 0
+            c_alphabet_num = 0
+            symbols_num = 0
 
             for i in last_password:
+                if i in s_alphabet:
+                    s_alphabet_num += 1
                 if i in c_alphabet:
-                        nums += i
+                    c_alphabet_num += 1
+                if i in symbols:
+                    symbols_num += 1
 
             last_password_label = tk.Label(frame, text=last_password)
             last_password_label.grid(row=3, column=0)
-            num = tk.Label(frame, text=nums)
+            num = tk.Label(frame, text=str(symbols_num))
             num.grid(row=4, column=0)
+            return
 
 
 menu = tk.OptionMenu(frame, val, *options)
