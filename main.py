@@ -27,20 +27,27 @@ options = ["Add Login", "Show Logins", "Generate Password"]
 
 
 def check():
+    e_label = tk.Label(frame, text="Email")
+    email = tk.Entry(frame)
+    p_label = tk.Label(frame, text="Password")
+    password = tk.Entry(frame)
+    submit = tk.Button(frame, text="Submit", fg="red")
+
     if val.get() == options[0]:
-        e_label = tk.Label(frame, text="Email")
         e_label.grid(row=3, column=0, sticky='W')
-        email = tk.Entry(frame)
         email.grid(row=3, column=1)
-        p_label = tk.Label(frame, text="Password")
         p_label.grid(row=4, column=0, sticky='W')
-        password = tk.Entry(frame)
         password.grid(row=4, column=1)
-        submit = tk.Button(frame, text="Submit", fg="red")
         submit.grid(row=5, column=0, columnspan=2)
     if val.get() == options[1]:
         return 0
     if val.get() == options[2]:
+        global last_password_label
+        e_label.destroy()
+        email.destroy()
+        p_label.destroy()
+        password.destroy()
+        submit.destroy()
 
         s_alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
                       'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
@@ -50,37 +57,58 @@ def check():
                       'I', 'J', 'K', 'l', 'm', 'n', 'O', 'P', 'Q',
                       'r', 's', 't', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-        numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-        symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-',
-                   '+', '=', '/', '\\', '?', '<', '>', '{', '}', '[', ']',
-                   '_', ';', ',', '.', '"', "'"]
+        symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '-',
+                   '+', '=', '?']
 
         choices = [s_alphabet, c_alphabet, numbers, symbols]
         last_password = ''
 
+        s_alphabet_num = 0
+        c_alphabet_num = 0
+        numbers_num = 0
+        symbols_num = 0
         while True:
             for i in range(15):
 
-                main_probability = random.choice(choices)
+                if i == 0:
 
-                branched_probability = random.choice(main_probability)
-                last_password += str(branched_probability)
+                    main_probability = random.choice(choices)
 
-            s_alphabet_num = 0
-            c_alphabet_num = 0
-            numbers_num = 0
-            symbols_num = 0
+                    branched_probability = random.choice(main_probability)
+                    last_password += str(branched_probability)
 
-            for i in last_password:
-                if i in s_alphabet:
+                    if branched_probability in s_alphabet:
+                        s_alphabet_num += 1
+                    if branched_probability in c_alphabet:
+                        c_alphabet_num += 1
+                    if branched_probability in numbers:
+                        numbers_num += 1
+                    if branched_probability in symbols:
+                        symbols_num += 1
+                        break
+
+                min_list = [s_alphabet_num, c_alphabet_num, numbers_num, symbols_num]
+                min_num = min(min_list)
+                if s_alphabet_num == min_num:
+                    branched_probability = random.choice(s_alphabet)
+                elif c_alphabet_num == min_num:
+                    branched_probability = random.choice(c_alphabet)
+                elif numbers_num == min_num:
+                    branched_probability = random.choice(numbers)
+                elif symbols_num == min_num:
+                    branched_probability = random.choice(symbols)
+
+                if str(branched_probability) in s_alphabet:
                     s_alphabet_num += 1
-                if i in c_alphabet:
+                elif str(branched_probability) in c_alphabet:
                     c_alphabet_num += 1
-                if i in numbers:
+                elif branched_probability in numbers:
                     numbers_num += 1
-                if i in symbols:
+                elif str(branched_probability) in symbols:
                     symbols_num += 1
+                last_password += str(branched_probability)
 
             last_password_label = tk.Label(frame, text=last_password)
             last_password_label.grid(row=3, column=0)
@@ -99,5 +127,5 @@ commit.grid(row=1, column=0, columnspan=2)
 root.mainloop()
 
 mydb.commit()
-
-# todo look for errors in line 71
+# todo add sql database insertion
+# todo fix add password and generate password selection error
