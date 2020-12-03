@@ -184,4 +184,3 @@ commit.grid(row=1, column=0, columnspan=2)
 root.mainloop()
 
 mydb.commit()
-# todo fix add password and generate password selection error
